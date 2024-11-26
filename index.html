@@ -83,6 +83,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             white-space: nowrap;
+            min-width: 80px;
         }
 
         .copy-btn:hover {
@@ -91,6 +92,13 @@
 
         .copy-btn.copied {
             background-color: #22c55e;
+            font-size: 13px;
+        }
+
+        /* Add a subtle highlight effect when text is selected */
+        .key-input::selection {
+            background-color: #3b82f6;
+            color: white;
         }
     </style>
 </head>
