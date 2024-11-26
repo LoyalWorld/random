@@ -13,36 +13,28 @@ function generateRandomChars(length) {
     return result;
 }
 
-function getCurrentSeconds() {
-    return new Date().getSeconds().toString().padStart(2, '0');
+function getTimeComponents() {
+    const now = new Date();
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    
+    // Create array of time components and shuffle them
+    const timeComponents = [seconds, hours, month];
+    for (let i = timeComponents.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [timeComponents[i], timeComponents[j]] = [timeComponents[j], timeComponents[i]];
+    }
+    
+    return timeComponents.join('');
 }
 
 function generateKey() {
     const prefix = 'MAA';
     const digits = generateRandomDigits(7);
     const randomChars = generateRandomChars(10);
-    const seconds = getCurrentSeconds();
+    const timeString = getTimeComponents();
     
-    const key = `${prefix}-${digits}-${randomChars}-${seconds}`;
+    const key = `${prefix}-${digits}-${randomChars}-${timeString}`;
     document.getElementById('generatedKey').value = key;
-}
-
-function copyKey() {
-    const keyInput = document.getElementById('generatedKey');
-    const copyBtn = document.querySelector('.copy-btn');
-    
-    if (keyInput.value) {
-        // Select the text
-        keyInput.select();
-        keyInput.setSelectionRange(0, 99999); // For mobile devices
-        
-        // Update button state to guide user
-        copyBtn.textContent = 'Use Ctrl+C/⌘+C';
-        copyBtn.classList.add('copied');
-        
-        setTimeout(() => {
-            copyBtn.textContent = 'Copy';
-            copyBtn.classList.remove('copied');
-        }, 2000);
-    }
 }
