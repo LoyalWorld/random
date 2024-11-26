@@ -27,22 +27,22 @@ function generateKey() {
     document.getElementById('generatedKey').value = key;
 }
 
-async function copyKey() {
+function copyKey() {
     const keyInput = document.getElementById('generatedKey');
     const copyBtn = document.querySelector('.copy-btn');
     
     if (keyInput.value) {
-        try {
-            await navigator.clipboard.writeText(keyInput.value);
-            copyBtn.textContent = 'Copied!';
-            copyBtn.classList.add('copied');
-            
-            setTimeout(() => {
-                copyBtn.textContent = 'Copy';
-                copyBtn.classList.remove('copied');
-            }, 2000);
-        } catch (err) {
-            console.error('Failed to copy text: ', err);
-        }
+        // Select the text
+        keyInput.select();
+        keyInput.setSelectionRange(0, 99999); // For mobile devices
+        
+        // Update button state to guide user
+        copyBtn.textContent = 'Use Ctrl+C/⌘+C';
+        copyBtn.classList.add('copied');
+        
+        setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+            copyBtn.classList.remove('copied');
+        }, 2000);
     }
 }
